@@ -1,0 +1,14 @@
+{
+  "name": "advanz-paid-media-marketplace",
+  "owner": {
+    "name": "Advanz Growth Partner",
+    "email": "matias@advanz.cl"
+  },
+  "plugins": [
+    {
+      "name": "advanz-paid-media",
+      "source": "./plugins/advanz-paid-media",
+      "description": "Skills de marketing, paid media, copy, CRO y video para Advanz Growth Partner. Workflows pensados para ecommerce LATAM con stack Shopify + Klaviyo + Meta + GA4."
+    }
+  ]
+}
