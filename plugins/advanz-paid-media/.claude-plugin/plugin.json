@@ -1,9 +1,25 @@
 {
   "name": "advanz-paid-media",
-  "version": "1.0.0",
-  "description": "Skills de marketing, paid media, copy, CRO y video para Advanz Growth Partner. Workflows pensados para ecommerce LATAM con stack Shopify + Klaviyo + Meta + GA4.",
+  "version": "2.0.0",
+  "description": "Toolkit completo del equipo Advanz Growth Partner para Cowork: 81 skills + 10 agents cubriendo paid ads (Google, Meta, TikTok, YouTube, LinkedIn, Microsoft, Apple), CRO, SEO, lifecycle, copy, research, video y dev stack. Pensado para ecommerce LATAM con stack Shopify + Klaviyo + Meta + GA4.",
   "author": {
     "name": "Advanz Growth Partner",
     "url": "https://advanz.cl"
-  }
+  },
+  "homepage": "https://advanz.cl",
+  "repository": "https://github.com/AdvanzGrowthPartner/advanz-paid-media-marketplace",
+  "keywords": [
+    "paid-ads",
+    "ecommerce",
+    "latam",
+    "shopify",
+    "klaviyo",
+    "google-ads",
+    "meta-ads",
+    "tiktok-ads",
+    "cro",
+    "seo",
+    "copywriting",
+    "growth-engine"
+  ]
 }
