@@ -5,12 +5,14 @@ description: >-
   compartir. Es un ROUTER POR CANAL: el usuario dice el canal y la skill arma ese reporte. Canales:
   (1) PAID / Negocio — Meta, Google, Shopify, GA4, competencia (módulo base, references/estructura.md +
   references/datos.md); (2) CORREO / EMAIL — Klaviyo, campañas + flujos, captación (references/email.md);
-  (3) SEO / GEO — en construcción (references/seo.md). Usa SIEMPRE que el usuario diga "reporte de paid",
-  "reporte de correo/email", "reporte de SEO", "reporte de cierre de mes", "reporte de performance",
+  (3) SEO / GEO — orgánico (Google/Search Console vía Ahrefs) + citas en IA/GEO (references/seo.md). Los 3
+  canales de adquisición comparten motor de gráficos, tono y entrega. Usa SIEMPRE que el usuario diga "reporte
+  de paid", "reporte de correo/email", "reporte de SEO", "reporte de cierre de mes", "reporte de performance",
   "cierre de [cliente]", "reporte mensual", "reporte de [evento/campaña]", "armá el reporte", "quiero la
-  data de paid/correo/seo", o pegue una matriz/planilla y pida un reporte. Cubre cierres mensuales y
-  reportes de evento/campaña. SOLO ecommerce DTC/B2C. Es marca-agnóstica: el motor y el estándar no cambian,
-  cambia el mapa de cuentas del cliente. Amazing Care (amazingcare.cl) es el primer caso validado.
+  data de paid/correo/seo", o pegue una matriz/planilla y pida un reporte. Cubre cierres mensuales y reportes
+  de evento/campaña, y **emite un handoff estructurado que alimenta a los agentes de ejecución** (paid-ops,
+  Klaviyo, SEO/GEO, CRO). SOLO ecommerce DTC/B2C. Es marca-agnóstica: el motor y el estándar no cambian,
+  cambia el mapa de cuentas del cliente.
 metadata:
   type: reporting
 ---
@@ -26,10 +28,26 @@ a todos los canales; lo que cambia es la data y la estructura de cada uno.
 |---|---|---|
 | "reporte de **paid**", "cierre de mes" completo, Meta/Google/Shopify/negocio | **Paid / Negocio** | `references/estructura.md` + `references/datos.md` |
 | "reporte de **correo**/email", Klaviyo, campañas, flujos, captación | **Correo / Email** | `references/email.md` |
-| "reporte de **SEO**/GEO", orgánico, rankings, citas en LLMs | **SEO / GEO** | `references/seo.md` *(en construcción)* |
+| "reporte de **SEO**/GEO", orgánico, rankings, citas en LLMs | **SEO / GEO** | `references/seo.md` |
 
-Si el cliente no tiene mapa de cuentas aún, levantá los IDs del canal y guardalos en memoria como
-`<cliente>_account_map` antes de armar.
+Los **3 canales** son los frentes de adquisición donde el equipo mete mano. Comparten el **estándar común**
+(abajo), el **motor de gráficos** (`assets/report_charts.py`) y el **handoff** (`references/handoff.md`);
+cambia la data y la estructura de cada uno. Si el cliente no tiene mapa de cuentas aún, levantá los IDs del
+canal y guardalos en memoria como `<cliente>_account_map` antes de armar.
+
+## La forma accionable (común a los 3 canales)
+Todo reporte, sea paid, correo o SEO, sigue la misma silueta — lo que la hace comparable y accionable:
+1. **Resultados del mes** — KPIs primero (positivo/negativo por color) + **caja de tesis** destacada.
+2. **Cómo venimos** — tendencia mes a mes + **año contra año** (controla estacionalidad).
+3. **Captación / entrada de demanda** — embudo del canal (pop-up en email, recorrido en paid, quick wins en SEO).
+4–6. **Los motores del canal** — cada canal tiene 2–3 motores que se leen por separado (email: campañas vs.
+   flujos; paid: prospección vs. remarketing + producto; SEO: Google clásico vs. GEO). Gráficos, no listas;
+   tablas con heatmap sutil; una **vista de decisión** (qué priorizar, con veredicto).
+7. **Próximos pasos** — dos columnas **🏢 Advanz ejecuta** / **🤝 Cliente ejecuta** + ejecución inmediata.
+8. **Proyección** — al final, sección propia (base vs. óptimo con la base del cálculo).
+
+Cada conclusión y próximo paso se convierte en una **acción** del handoff que un agente de ejecución puede
+tomar (ver `references/handoff.md`). El reporte diagnostica y propone; **no ejecuta**.
 
 ## Estándar común (todos los canales)
 Antes de escribir una línea, internalizá esto — vale para paid, correo y SEO:
@@ -75,6 +93,10 @@ guardás.**
   (`Clientes / <cliente> / Reportes Mensuales / <año> / <mes>`), junto al de los otros canales. Se sube el
   `.html` como archivo adjunto (`notion-create-file-upload`); si el entorno no puede subir, se inserta un
   **resumen nativo** con `notion-update-page` y se deja el HTML para adjuntar a mano. Ver `references/email.md`.
+- **Handoff a ejecución:** junto al `.html` se emite el sidecar **`cliente-canal-mes.acciones.json`** con las
+  decisiones estructuradas (owner Advanz/Cliente, evidencia, prioridad, agente que la ejecuta). Es lo que
+  toman los **agentes de ejecución** aguas abajo. Detalle y esquema en `references/handoff.md`. La skill de
+  reporting **no ejecuta**: diagnostica y propone.
 
 ## Reglas de datos (común)
 - **Método consistente por canal.** No mezclar ventanas de atribución dentro de un mismo número. En correo,
@@ -87,6 +109,7 @@ guardás.**
 ## Gotchas transversales
 - Atribución que se solapa (email/SEO) → "influyó en $X", nunca sumado.
 - Meta suele estar en USD ≠ CLP; convertir y avisar.
-- Search Console hoy no está por MCP → SEO se mide con GA4/Ahrefs/Semrush (ver `references/seo.md`).
+- Search Console ya está por MCP (Ahrefs `gsc-*`) → es la fuente de verdad del orgánico; Ahrefs/Semrush para
+  competencia y oportunidad, brand-radar para GEO (ver `references/seo.md`).
 - Si un CDN de imágenes está bloqueado por el sandbox, referenciar la URL y dejar el script de embebido para
   correr desde una máquina con acceso.

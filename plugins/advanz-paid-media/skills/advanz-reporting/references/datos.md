@@ -11,8 +11,8 @@
 | Alcance, frecuencia, CTR, CPC, video, ROAS por campaña/anuncio, miniaturas | **Meta Ads** (`ads_get_ad_entities`, `ads_get_creatives`) | Verificá campos con `ads_get_field_context`. Requiere `client_conversation_id` (20 chars). |
 | Volumen de anuncios activos vs. competencia | **Meta Ad Library** (`ads_library_search`) | Para la sección de fatiga/volumen. |
 
-Traé todo en paralelo. Ver también memorias: [[amazing_account_map]], [[meta_ads_mcp]], [[google_ads_mcp_setup]],
-[[ga4_mcp_setup]], [[meta_ads_mcp]].
+Traé todo en paralelo. Ver también memorias: `[[<cliente>_account_map]]`, [[meta_ads_mcp]],
+[[google_ads_mcp_setup]], [[ga4_mcp_setup]].
 
 ## Cómo cruzar (regla de oro)
 - **Conversiones Google/Meta = matriz.** El resto de KPIs (ROAS/CTR/CPC/alcance/impression share por campaña
@@ -28,19 +28,25 @@ Traé todo en paralelo. Ver también memorias: [[amazing_account_map]], [[meta_a
 - **Meta suele estar en USD** (≠ CLP de la tienda). Convertir a CLP (FX ≈ 1.000 salvo dato mejor) y avisarlo.
 - **Meta in-platform ≠ matriz**: las compras que reporta Meta (pixel, ventana propia) son más que la
   atribución last-click. En creativos/campañas usar métricas de plataforma y aclarar "in-platform".
-- **Search Console**: hoy no disponible por MCP → SEO se mide con GA4 (orgánico); dejarlo como pendiente.
+- **Search Console**: disponible por MCP vía Ahrefs (`gsc-*`) → para la lectura de orgánico usá ese o el
+  módulo SEO (`references/seo.md`); GA4 sigue sirviendo para el share de canales.
 - **Campaña de alcance/awareness** (objetivo reach): no aparece en el ROAS de conversión por diseño; su
   impacto es de marca/retail, no de venta web. Leerla aparte.
 - **Cálculos que se derivan** (para chequear una lectura de matriz): CPA canal = inversión ÷ conversiones;
   ticket = venta neta ÷ órdenes; CAC = inversión total ÷ órdenes. Sirve para validar la matriz si la imagen
   no se lee bien.
 
-## Mapa de cuentas — Amazing Care (caso validado)
-- **Shopify**: amazingcare.cl (`25trtw-d5.myshopify.com`), CLP.
-- **Meta Ads DTC**: `2911300959169889` (USD). Mayorista: `3131920510317594` (CLP).
-- **Google Ads DTC**: `8800950215` (CLP). MCC Advanz: `5816304092`.
-- **GA4**: property `354353475` (en USD por decisión; usar para share/canales, no revenue en CLP).
-- **Klaviyo**: métrica "Placed Order" id `RP5iQ9`.
-- Competidor de referencia (Ad Library / SEO): **Extra Life**.
+## Mapa de cuentas — la FORMA (con un ejemplo de referencia)
+El motor es marca-agnóstico: lo que cambia entre clientes es este mapa. Levantalo SIEMPRE del cliente y
+guardalo en memoria como `<cliente>_account_map` antes de armar. Campos a completar:
+- **Shopify**: dominio + `*.myshopify.com` + moneda de la tienda.
+- **Meta Ads**: id de cuenta DTC (ojo moneda: suele USD) + id mayorista si existe (CLP).
+- **Google Ads**: id de cuenta + MCC.
+- **GA4**: property id (anotá en qué moneda está).
+- **Klaviyo**: id de la métrica de compra ("Placed Order").
+- **Competidor de referencia** (Ad Library / SEO).
 
-Para un cliente nuevo: levantar estos IDs, guardarlos en memoria como `<cliente>_account_map`, y recién armar.
+*Ejemplo ya validado (primer caso, sólo como muestra del formato — no reusar en otro cliente):* Shopify
+`*.myshopify.com` en CLP; Meta DTC en USD + mayorista en CLP; Google Ads + MCC; GA4 property en USD (usar
+para share/canales, no revenue en CLP); Klaviyo "Placed Order". Cada valor real vive en el `account_map` del
+cliente, no en esta skill.

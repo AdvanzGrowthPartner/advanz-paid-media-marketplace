@@ -1,8 +1,39 @@
 # Design system y entrega
 
-## Base
-Partí SIEMPRE de `assets/plantilla.html`: trae el CSS completo (tokens de marca + todos los componentes) y el
-esqueleto de header + nav. Copiala a la carpeta del cliente y llená los bloques según `estructura.md`.
+Vale para los **3 canales** (paid, email, SEO): mismo shell, mismo motor de gráficos, mismas reglas. Lo que
+cambia es la data de cada módulo, no el sistema visual.
+
+## Base (dos piezas)
+1. **Shell** — `assets/plantilla.html`: CSS completo (tokens de marca + componentes) + esqueleto header/nav.
+   Copiala a la carpeta del cliente y llená los bloques según el módulo del canal.
+2. **Motor de gráficos** — `assets/report_charts.py`: la librería SVG con hover. **Todos los gráficos salen
+   de acá**, en los 3 canales. No dibujar charts a mano ni con librerías externas.
+
+## Motor de gráficos (`report_charts.py`) — el estándar
+Inventario (todos con `class="hv"` + `data-tip`, número visible, texto en tinta):
+- `donut(data, ...)` — mix con leyenda a la derecha (cuando importa la proporción).
+- `hbars(items, ...)` — barras horizontales: "qué tipo/página/producto rinde más" (ranking, no solo mix).
+- `stacked(cats, series, ...)` — tendencia mes a mes (ej. campañas+flujos, tráfico por tipo).
+- `cohort(days, bands, cells, vmax)` — heatmap horario: **franja en las filas (vertical), días en las
+  columnas (horizontal)**, color **sutil** (saturación topada).
+- `funnel(steps, ...)` — embudo **real de trapecios** (captación, recorrido de compra), no barras.
+- `speedo(pct, lo, hi, mx)` — **velocímetro con aguja** + zona verde de meta (participación de flujos,
+  share of voice). Es la variante preferida sobre `gauge` (semicírculo relleno, que queda disponible).
+- `hmt(v, vmin, vmax)` — **heatmap sutil de tabla**: colorea **solo el número** (verde=fuerte / rojo=débil),
+  **sin banda de fondo**. Es el estándar de todas las tablas de KPIs/tipos.
+- `heatcell(v, vmin, vmax)` — fondo de celda; **solo para grillas densas** tipo cohorte, con saturación topada.
+
+Plumbing: agregá `TT_DIV` una vez en el `<body>` y `TOOLTIP_JS` antes de `</body>` (o el CSS `TT_CSS`).
+
+### Reglas de dato en los gráficos (pedido del cliente, obligatorio)
+- **Números en CLP completo:** `$1.366.447`, nunca `1366k` ni `1,3M` en tablas. Miles con **punto**
+  (`format(n,",d").replace(",",".")`). Cuidado con `.replace(",",".")` sobre un string que contenga
+  `rgb(…)`: rompe el color — formateá el número, no la fila entera.
+- **Heatmap sutil:** las tablas NO llevan banda de color completa. La métrica toma relevancia por su color
+  (verde/rojo) vía `hmt`; el fondo plano.
+- **Cohorte:** franja horaria vertical, días horizontal.
+- **Conclusiones con color + Advanz/Cliente** (verde/rojo/violeta, máx. 2 líneas, split 🏢/🤝).
+- **Proyección al final**, en su propia sección.
 
 ## Marca Advanz
 - Tipografías: **Poppins** (texto) + **Space Grotesk** (títulos, números). Vía Google Fonts.

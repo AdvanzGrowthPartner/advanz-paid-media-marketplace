@@ -49,8 +49,8 @@ Reporte del canal de correo para el cliente. Dos motores distintos con métricas
    Sep óptimo con la grilla aprobada 8+4; nota de rango. Es el cierre del reporte.
 
 ## Taxonomía de campañas (de la Grilla de Correos del cliente)
-Usá **las etiquetas de la grilla del cliente**, no una genérica. Amazing arma cada envío como
-`Macro · Subtipo` y las **macro-categorías** son tres (así se agrupan en la barra `hbars` y en la tabla):
+Usá **las etiquetas de la grilla del cliente**, no una genérica. Cada envío se arma como
+`Macro · Subtipo`; típicamente hay **tres macro-categorías** (así se agrupan en la barra `hbars` y en la tabla):
 - **Producto** — contenido de un producto ancla (`Producto · Fibra`, `Producto · Energy`). Vende directo;
   **satura si se repite el mismo producto en pocos días** (el 3er envío en 7 días rinde muy poco).
 - **Oferta** — promo con % o gancho explícito (`Oferta · Fiestas Patrias`, `Oferta · Retail (Jumbo)`).
@@ -84,7 +84,7 @@ contenido de marca. Meta: llevar los flujos del aporte actual hacia **25–30% d
 ## Fuentes (MCP Klaviyo) — send-time salvo que se indique
 | Dato | Herramienta | Notas |
 |---|---|---|
-| Métrica de conversión | `get_metrics` | "Placed Order" (Shopify). Amazing Care: `RP5iQ9`. |
+| Métrica de conversión | `get_metrics` | "Placed Order" (Shopify). Levantá el id del cliente (ej. `RP5iQ9`). |
 | Campañas del mes (por campaña) | `get_campaign_report` | `group_by:["campaign_id","campaign_message_name","send_channel"]`, `filters: equals(send_channel,"email")`, stats + `value_statistics:[conversion_value,average_order_value,revenue_per_recipient]`. `send_time`/audiencias vienen en `campaign_details`. |
 | Total mes / tendencia (por mes) | `get_campaign_report` + `get_flow_report` por mes | Un call por mes con `group_by:["send_channel"]` (campañas) y `["flow_id","flow_name","send_channel"]` (flujos), sumás. Es la forma consistente de la tendencia 6-meses. |
 | Flujos del mes | `get_flow_report` | `flow_aggregation` da el total por flujo. Excluir tag "NO USAR". |
@@ -94,10 +94,13 @@ contenido de marca. Meta: llevar los flujos del aporte actual hacia **25–30% d
 | Suscriptores nuevos | `query_metric_aggregates` | "Subscribed to Email Marketing" `QYLKnd`, count, mensual. |
 | Tendencia de canal (contexto) | `query_metric_aggregates` | "Placed Order" `by:["$attributed_channel"]` (email) o `["$attributed_flow"]`. **Event-time** → solo forma, no mezclar con send-time. |
 
-**Mapa de cuentas — Amazing Care (validado):** Klaviyo métricas: Placed Order `RP5iQ9`, Viewed Form `SQLn6z`,
-Submitted Form `WrC97x`, Subscribed Email `QYLKnd`. Flujos: Welcome_AON `S8bwJx`, Carritos_AON `RCsVZf`,
-Postcompra `QQjgEa`, Recompra_AON `VNCVuB`, Flash `TXdmwz`, Cyber `QSHsP9`, Nutrikit `SrbL9b`/`R8UBbY` (NO USAR).
-Para un cliente nuevo: levantar estos IDs y guardarlos en `<cliente>_account_map`.
+**Mapa de cuentas — la FORMA.** El motor es marca-agnóstico; lo que cambia es este mapa. Levantá SIEMPRE del
+cliente y guardá en `<cliente>_account_map`: ids de métricas (Placed Order, Viewed Form, Submitted Form,
+Subscribed Email) e ids de los flujos (Bienvenida, Carrito, Post-compra, Recompra, carritos de evento
+Flash/Cyber, y el circuito transaccional tipo "códigos" con tag **NO USAR** a excluir del comercial).
+*Ejemplo de referencia (primer caso validado, sólo como muestra del formato — no reusar en otro cliente):*
+Placed Order `RP5iQ9`, Viewed Form `SQLn6z`, Submitted Form `WrC97x`, Subscribed Email `QYLKnd`; flujos
+Welcome/Carritos/Postcompra/Recompra + Flash/Cyber, y Nutrikit como circuito NO USAR.
 
 ## Métricas y fórmulas
 - **RPR** (retorno por envío / contacto) = ventas ÷ destinatarios. **CTOR** = clics ÷ aperturas. **Conversión
