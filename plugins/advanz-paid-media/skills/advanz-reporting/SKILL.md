@@ -64,9 +64,10 @@ guardás.**
   Base y componentes en `assets/plantilla.html` y `references/design-system.md`.
 - **Título:** que se lea el canal en grande (ej. píldora "📧 Email Marketing · Cierre mensual").
 - **HTML branded autocontenido:** imágenes embebidas en base64 cuando se pueda; si el sandbox bloquea el
-  CDN, referenciá la URL y avisalo (el archivo se ve al abrirlo online). Guardado **local** en
-  `empresa/clientes/<cliente>/reportes/` como `YYYY-MM-DD_reporte-<canal>-<tipo>.html`, y una copia `-FINAL`
-  al aprobar. **NO** publicar como Artifact salvo para preview de validación.
+  CDN, referenciá la URL y avisalo (el archivo se ve al abrirlo online). **Nombre de salida: `cliente-canal-mes`**
+  (minúsculas, sin fecha; ej. `amazing-email-agosto.html`, `amazing-paid-agosto.html`, `amazing-seo-agosto.html`).
+  Guardado **local** en `empresa/clientes/<cliente>/reportes/`, con una copia `-FINAL` al aprobar. **NO**
+  publicar como Artifact salvo para preview de validación.
 - **Entrega en Notion:** el reporte se **incrusta** en la página de cierre del cliente
   (`Clientes / <cliente> / Reportes Mensuales / <año> / <mes>`), junto al de los otros canales. Se sube el
   `.html` como archivo adjunto (`notion-create-file-upload`); si el entorno no puede subir, se inserta un

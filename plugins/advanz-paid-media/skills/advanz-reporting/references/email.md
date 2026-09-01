@@ -103,6 +103,7 @@ Para un cliente nuevo: levantar estos IDs y guardarlos en `<cliente>_account_map
   pestaña de formularios de Klaviyo / GA4 / reporte de paid.
 
 ## Entrega
+Nombre de salida: **`cliente-canal-mes`** (ej. `amazing-email-agosto.html`).
 1. Preview de validación (Artifact) para iterar en el chat.
 2. Al aprobar: `-FINAL` local + **Notion**: subir el `.html` con `notion-create-file-upload` a la página de
    cierre del cliente; si el entorno bloquea la subida, insertar un **resumen nativo** con
