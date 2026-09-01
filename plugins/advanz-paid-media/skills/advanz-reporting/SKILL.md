@@ -45,10 +45,12 @@ Antes de escribir una línea, internalizá esto — vale para paid, correo y SEO
   separá en cajas. Usá emojis para escanear.
 - **Métricas primero, texto en box.** El bloque de apertura son KPIs bien espaciados (positivo/negativo por
   color), y la tesis va en una **caja destacada**, no en prosa suelta.
-- **Gráficos, no listas.** El cliente decide mirando gráficos: torta (mix, leyenda a la derecha), barras
-  (tendencia mes a mes y año contra año — que aparezca el año en curso), cohorte (día×hora, mapa de calor),
-  embudos, gauge de meta. Todo gráfico lleva **números visibles** y **hover** (tooltip). Las tablas usan
-  **mapa de calor** por celda.
+- **Gráficos, no listas.** El cliente decide mirando gráficos: torta o **barras por tipo** (cuando importa
+  el ranking, no sólo el mix), barras de tendencia mes a mes y año contra año (que aparezca el año en curso),
+  **cohorte horario** (franja en las filas / día en las columnas, mapa de calor **sutil**), embudo real,
+  **velocímetro** de meta (`speedo`, aguja + zona verde). Todo gráfico lleva **números visibles** (en CLP
+  completo, no "1366k") y **hover** (tooltip). Las tablas usan **heatmap sutil** (`hmt`): se colorea el
+  número (verde=fuerte / rojo=débil), **sin banda de fondo** — la métrica toma relevancia, no el color.
 - **Simple y escaneable.** Tesis/titular arriba (5 segundos), datos en tiles/tablas/charts, reads de 1–2
   frases, postura en los próximos pasos. Pirámide invertida.
 
@@ -59,8 +61,9 @@ guardás.**
 - **Marca Advanz:** Poppins (texto) + Space Grotesk (títulos/números); violeta `#7b2ff7`→`#c15dff`, cyan
   `#22d3ee`, fondo `#f6f4fb`. Paleta categórica CVD-safe validada: evento `#7b2ff7`, producto `#0e9bc9`,
   contenido `#e8850c`, retail `#2563eb`, marca `#d83a7d`. Verde/rojo solo para chips de variación.
-- **Charts + tooltip + heatmap:** usá `assets/report_charts.py` (librería de gráficos SVG con hover ya
-  hechos: donut, barras apiladas, cohorte horario, gauge, embudo, barras horizontales, celda heatmap).
+- **Charts + tooltip + heatmap:** usá `assets/report_charts.py` (gráficos SVG con hover ya hechos: donut,
+  barras apiladas, cohorte horario —franja×día—, velocímetro `speedo` y gauge, embudo real de trapecios,
+  barras horizontales `hbars`, `hmt` para heatmap sutil de tabla y `heatcell` para grillas densas).
   Base y componentes en `assets/plantilla.html` y `references/design-system.md`.
 - **Título:** que se lea el canal en grande (ej. píldora "📧 Email Marketing · Cierre mensual").
 - **HTML branded autocontenido:** imágenes embebidas en base64 cuando se pueda; si el sandbox bloquea el

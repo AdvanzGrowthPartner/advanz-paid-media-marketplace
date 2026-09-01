@@ -17,7 +17,7 @@ Reporte del canal de correo para el cliente. Dos motores distintos con métricas
   su volumen depende de la inversión en medios → **cruce con el reporte de paid**. Rinden mucho más por
   contacto que un envío masivo.
 
-## Estructura del reporte (7 bloques)
+## Estructura del reporte (8 bloques)
 1. **Resultados del mes** — KPIs primero (bien espaciados): **Ventas totales atribuidas (Klaviyo)**, N° de
    ventas (pedidos) + ticket promedio, ventas de campañas, ventas de flujos, retorno por envío (RPR),
    apertura promedio (estable/rango), nuevos suscriptores. Después una **caja de tesis** destacada.
@@ -27,25 +27,41 @@ Reporte del canal de correo para el cliente. Dos motores distintos con métricas
    (ticket)** + **tabla de formularios de registro** uno por uno (vistas, registros, tasa, heatmap). El
    mobile/web y el origen paid/orgánico se cruzan con Klaviyo forms UI / GA4 / paid.
 4. **Correos de campaña** — KPIs (ventas, envíos **X / 12** con la regla **8 spot + 4 evento**, CTOR,
-   conversión/apertura, RPR). **Torta** del mix por tipo (leyenda a la derecha). **Cohorte horario**
-   (día×hora, mapa de calor por RPR) con las mejores ventanas. **Tabla por tipo** con envíos, alcance,
-   **ventas (n°), ticket, ventas ($), RPR** (heatmap en ventas$ y RPR).
+   conversión/apertura, RPR). **Barras por tipo** (`hbars` — qué tipo de correo vende más, en CLP,
+   coloreado por macro-categoría; reemplaza a la torta cuando importa el ranking, no sólo el mix).
+   **Cohorte horario** (`cohort` — **franja horaria en las filas / días en las columnas**, mapa de calor
+   por RPR, color sutil) con las mejores ventanas. **Tabla por tipo** con envíos, alcance, **ventas (n°),
+   ticket, ventas ($), RPR** — heatmap **sutil** con `hmt` en ventas$ y RPR (colorea el número, sin banda).
+   Números en **CLP completo** (1.366.447, nunca "1366k").
 5. **Los correos: qué vendió cada uno** — vista de **decisión**, no de galería: por correo/campaña →
    **cuánto vendió + veredicto (✅ bueno / ⚠️ mejorar / ❌ malo) + prioridad para el próximo mes** + qué
    producto movió. La lógica: "mandamos un correo de X producto/campaña → ¿qué vendió?". Barra de productos.
 6. **Flujos automáticos** — **en orden 1 Bienvenida · 2 Carrito · 3 Post-compra · 4 Recompra** + carritos de
    evento (Flash/Cyber). Tabla con **secuencias, estado, alcance, ventas (n°), ticket, ventas ($), RPR**
-   (heatmap). **Tendencia de flujos últimos meses** + **gauge de participación (meta 25–30%)**. "Qué ajustar"
-   en 4 bloques ilustrados. Cerrar con la **oportunidad de ecosistema** (ver §Ecosistema).
-7. **Próximos pasos & proyección** — bloques ilustrados (no texto): grilla 8+4, reactivar bienvenida, ajustar
-   la grilla existente, proyección. Incluir ajuste de la grilla del próximo mes según lo aprendido.
+   (heatmap **sutil** `hmt`; el cero va en rojo). **Tendencia de flujos últimos meses** + **velocímetro
+   `speedo` de participación (aguja, zona verde 25–30%)**. "Qué ajustar" en 4 bloques ilustrados. Cerrar con
+   la **oportunidad de ecosistema** (ver §Ecosistema).
+7. **Próximos pasos** — dos columnas **🤝 Cliente** (ideas, beneficios, marca, estrategia global) y
+   **🏢 Advanz** (ajustes de flujos, piezas & tracking, automation & workflows, reporting) + un bloque de
+   **ejecución inmediata Advanz→Cliente** cuyos ítems salen de lo que muestran los gráficos (horario del
+   cohorte, palanca de la bienvenida, clonar evento+oferta). Bloques ilustrados, no texto.
+8. **Proyección — AL FINAL, sección propia** (no dentro de próximos pasos). Barras Ago real vs Sep base vs
+   Sep óptimo con la grilla aprobada 8+4; nota de rango. Es el cierre del reporte.
 
 ## Taxonomía de campañas (de la Grilla de Correos del cliente)
-Categorizá cada envío: **Evento + oferta** (mayor RPR — evento con % explícito), **Producto** (contenido de
-un producto ancla), **Contenido** (educativo; vende con día/hora/segmento correctos), **Retail** (empuja a
-punto de venta: Jumbo/Tottus/Cruz Verde — no venta web, RPR bajo por diseño), **Marca** (institucional, sin
-razón de compra directa). Reglas de la grilla: la base aguanta **6–8 spot/mes** (con 9–11 el revenue cae);
-evento+descuento concentra ~57% del revenue; el asunto mueve clic/venta, no apertura.
+Usá **las etiquetas de la grilla del cliente**, no una genérica. Amazing arma cada envío como
+`Macro · Subtipo` y las **macro-categorías** son tres (así se agrupan en la barra `hbars` y en la tabla):
+- **Producto** — contenido de un producto ancla (`Producto · Fibra`, `Producto · Energy`). Vende directo;
+  **satura si se repite el mismo producto en pocos días** (el 3er envío en 7 días rinde muy poco).
+- **Oferta** — promo con % o gancho explícito (`Oferta · Fiestas Patrias`, `Oferta · Retail (Jumbo)`).
+  **Mayor RPR** cuando hay **evento + descuento**; el sub-tipo *retail* empuja a punto de venta
+  (Jumbo/Tottus/Cruz Verde) → no venta web, **RPR bajo por diseño**.
+- **CausaSocial** — institucional/marca (`CausaSocial · AmazingContigo`). Sin razón de compra directa →
+  **RPR bajo**; suma a marca, no al ranking de venta pura.
+
+Levantá los pares `Macro · Subtipo` reales del cliente desde su grilla; las macro pueden variar por cuenta,
+el motor no. Reglas de la grilla: la base aguanta **6–8 spot/mes** (con 9–11 el revenue cae);
+**evento+descuento concentra el grueso del revenue**; el asunto mueve clic/venta, no apertura.
 
 ## Los 4 flujos (ecosistema)
 Recorrido: **Bienvenida (capta) → Carrito abandonado (recupera) → Post-compra (fideliza) → Recompra (2ª

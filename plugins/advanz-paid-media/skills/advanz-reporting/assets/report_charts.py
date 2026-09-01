@@ -4,13 +4,21 @@ Advanz Reporting — librería de gráficos SVG (con hover) para reportes HTML b
 Marca-agnóstica y reutilizable en cualquier canal (paid / correo / SEO).
 
 Cómo se usa:
-  from report_charts import donut, stacked, cohort, gauge, funnel, hbars, heatcell, TOOLTIP_JS, TT_DIV
+  from report_charts import (donut, stacked, cohort, gauge, speedo, funnel, hbars,
+                             hmt, heatcell, TOOLTIP_JS, TT_DIV)
   svg = donut([("Producto",1366447,CB['producto']), ...])
   # inyectá el SVG en tu HTML; agregá TT_DIV una vez en el <body> y TOOLTIP_JS antes de </body>.
 
+Inventario: donut · stacked (barras apiladas) · cohort (heatmap horario) · funnel (embudo real de
+  trapecios) · speedo (velocímetro con aguja) · gauge (semicírculo relleno) · hbars (barras horizontales,
+  sirve para 'tipos de correo por ventas') · hmt (heatmap sutil de tabla) · heatcell (fondo de celda para
+  grillas densas).
+
 Reglas de diseño (ver dataviz + design-system.md):
   - Todo elemento con dato lleva class="hv" y data-tip="..."; el tooltip lo maneja TOOLTIP_JS.
-  - Números visibles en el gráfico. Texto en tokens de tinta, nunca el color de la serie.
+  - Números visibles en el gráfico y en CLP completo (1.366.447, no "1366k"). Texto en tokens de tinta.
+  - Tablas: heatmap SUTIL con `hmt` (colorea sólo el número, sin banda de fondo). El fondo de celda
+    (`heatcell`) queda para la cohorte horaria, con la saturación topada.
   - Paleta categórica CVD-safe: evento #7b2ff7, producto #0e9bc9, contenido #e8850c, retail #2563eb, marca #d83a7d.
 """
 import math
@@ -30,11 +38,24 @@ TOOLTIP_JS = ("<script>(function(){var t=document.getElementById('tt');document.
   "document.addEventListener('mousemove',function(e){if(t.style.opacity==='1'){t.style.left=e.clientX+'px';t.style.top=e.clientY+'px';}});"
   "document.addEventListener('mouseout',function(e){if(e.target.closest('[data-tip]'))t.style.opacity='0';});})();</script>")
 
-def heatcell(v, vmin, vmax, base=(22,163,74)):
-    """Devuelve 'background:...;color:...' para una celda de tabla (mapa de calor). base = color saturado."""
-    t = 0 if vmax<=vmin else max(0,min(1,(v-vmin)/(vmax-vmin)))
+def hmt(v, vmin, vmax):
+    """Heatmap SUTIL para celdas de tabla — el ESTÁNDAR. Colorea sólo el NÚMERO (verde=fuerte,
+    rojo=débil), sin banda de fondo: la métrica toma relevancia, no el color. Devuelve sólo estilo de
+    texto ('color:...;font-weight:...'), sin background. Para un cero/sin dato pasá el string rojo directo.
+    Regla de marca (pedido del cliente): las tablas NO llevan banda de color completa."""
+    if vmax<=vmin: return "font-weight:600"
+    t=max(0,min(1,(v-vmin)/(vmax-vmin)))
+    if t>=0.6: return "color:#0f7a3d;font-weight:700"
+    if t<=0.22: return "color:#c0392b;font-weight:700"
+    return "font-weight:600"
+
+def heatcell(v, vmin, vmax, base=(123,47,247), cap=0.62):
+    """Fondo de celda con mapa de calor — SÓLO para grillas densas tipo cohorte horario (día×hora),
+    donde el patrón se lee por intensidad. NO usar en tablas de KPIs/tipos: ahí va `hmt` (sin banda).
+    `cap` topa la saturación para que ni la celda más fuerte quede chillona."""
+    t = 0 if vmax<=vmin else max(0,min(1,(v-vmin)/(vmax-vmin)))*cap
     r=int(255+(base[0]-255)*t); g=int(255+(base[1]-255)*t); b=int(255+(base[2]-255)*t)
-    fg = "#12101a" if t<0.6 else "#fff"
+    fg = "#12101a" if t<0.42 else "#fff"
     return f"background:rgb({r},{g},{b});color:{fg}"
 
 def donut(data, center_top="", center_sub="", size=196, r=68, sw=30):
@@ -74,15 +95,18 @@ def stacked(cats, series, mx=None, w=580, h=230, unit=""):
         o.append(f'<text x="{x+bw/2:.1f}" y="{h-padb+15}" text-anchor="middle" font-size="10" fill="{TXT}">{c}</text>')
     o.append('</svg>'); return ''.join(o)
 
-def cohort(days, bands, cells, vmax, label="", base=(123,47,247), w=560):
-    """Cohorte/heatmap día×franja. cells = {(day,band):(valor,n)}. Cubre 'cohorte horario' de campañas."""
+def cohort(days, bands, cells, vmax, label="", base=(123,47,247), w=560, cap=0.62):
+    """Cohorte/heatmap horario. cells = {(day,band):(valor,n)}. Orientación estándar (pedido del cliente):
+    FRANJA HORARIA en las FILAS (vertical) y DÍAS en las COLUMNAS (horizontal). Color topado por `cap`
+    para que quede sutil. Las celdas sin envío van vacías (no probamos ahí)."""
     def hc(v):
-        t=0 if vmax<=0 else max(0,min(1,v/vmax)); r=int(255+(base[0]-255)*t);g=int(255+(base[1]-255)*t);b=int(255+(base[2]-255)*t)
-        return f"rgb({r},{g},{b})", ("#12101a" if t<0.55 else "#fff")
-    o=['<table class="cohort"><tr><th></th>']+[f'<th>{b}</th>' for b in bands]+['</tr>']
-    for d in days:
-        o.append(f'<tr><td class="dl">{d}</td>')
-        for b in bands:
+        t=(0 if vmax<=0 else max(0,min(1,v/vmax)))*cap
+        r=int(255+(base[0]-255)*t);g=int(255+(base[1]-255)*t);b=int(255+(base[2]-255)*t)
+        return f"rgb({r},{g},{b})", ("#12101a" if t<0.42 else "#fff")
+    o=['<table class="cohort"><tr><th></th>']+[f'<th>{d}</th>' for d in days]+['</tr>']
+    for b in bands:
+        o.append(f'<tr><td class="dl">{b}</td>')
+        for d in days:
             if (d,b) in cells:
                 val,n=cells[(d,b)]; bg,fg=hc(val)
                 o.append(f'<td class="cc hv" style="background:{bg};color:{fg}" data-tip="{d} {b}: {val} ({n})">{val}</td>')
@@ -102,17 +126,45 @@ def hbars(items, mx=None, w=560, rowh=36, fmt="{:,}"):
         o.append(f'<text x="{padl+max(bw,3)+7:.1f}" y="{y+4}" font-family="Space Grotesk" font-size="11.5" font-weight="700" fill="{INK}">{sub or fmt.format(v)}</text>')
     o.append('</svg>'); return ''.join(o)
 
-def funnel(steps, w=560, h=210):
-    """Embudo. steps = [(label, value, nota, color)]. Para captación vieron→registro→suscriptor→compra."""
-    padl=8;padt=10;padb=46;padr=8; ih=h-padt-padb; iw=w-padl-padr; mx=steps[0][1] or 1
-    n=len(steps); gw=iw/n; bw=gw*0.62
-    o=[f'<svg viewBox="0 0 {w} {h}" width="100%" style="max-width:{w}px">']
+def funnel(steps, w=560, h=300, fmt=None, gamma=0.42):
+    """Embudo REAL (trapecios centrados que se angostan) — no barras. steps = [(label, value, nota, color)].
+    Para captación vieron→registro→suscriptor→compra. `gamma`<1 abre la base para que un último paso muy
+    chico (ej. 4 compras) siga siendo visible. `fmt` formatea el número (default: miles con punto)."""
+    fmt = fmt or (lambda v: format(int(v),",d").replace(",","."))
+    cx=w/2; top=14; band=54; gap=14; maxw=min(360,w-180); mx=steps[0][1] or 1
+    def wd(v): return max(maxw*(v/mx)**gamma, 46)
+    o=[f'<svg viewBox="0 0 {w} {h}" width="100%" style="max-width:{w}px">']; y=top
     for i,(lab,val,note,col) in enumerate(steps):
-        x=padl+i*gw+gw/2-bw/2; bh=max(val/mx*ih,4); y=padt+ih-bh
-        o.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="4" fill="{col}" class="hv" data-tip="{lab}: {val}"/>')
-        o.append(f'<text x="{x+bw/2:.1f}" y="{y-6:.1f}" text-anchor="middle" font-family="Space Grotesk" font-size="13" font-weight="700" fill="{INK}">{val}</text>')
-        o.append(f'<text x="{x+bw/2:.1f}" y="{h-padb+15}" text-anchor="middle" font-size="10" fill="{TXT}">{lab}</text>')
-        if note: o.append(f'<text x="{x+bw/2:.1f}" y="{h-padb+29}" text-anchor="middle" font-size="9" fill="{FLOW}">{note}</text>')
+        w1=wd(val); w2=wd(steps[i+1][1]) if i+1<len(steps) else w1*0.5
+        x1=cx-w1/2; x2=cx-w2/2; yb=y+band
+        pts=f"{x1:.1f},{y:.1f} {x1+w1:.1f},{y:.1f} {x2+w2:.1f},{yb:.1f} {x2:.1f},{yb:.1f}"
+        o.append(f'<polygon points="{pts}" fill="{col}" class="hv" data-tip="{lab}: {fmt(val)}"/>')
+        o.append(f'<text x="{cx}" y="{y+band/2-1:.1f}" text-anchor="middle" font-family="Space Grotesk" font-size="15" font-weight="700" fill="#fff">{fmt(val)}</text>')
+        o.append(f'<text x="{cx+w1/2+10:.1f}" y="{y+band/2-3:.1f}" font-size="11" font-weight="600" fill="{INK}">{lab}</text>')
+        if note: o.append(f'<text x="{cx+w1/2+10:.1f}" y="{y+band/2+12:.1f}" font-size="10" fill="{FLOW}">{note}</text>')
+        y=yb+gap
+    o.append('</svg>'); return ''.join(o)
+
+def speedo(pct, lo, hi, mx=40, w=320, h=200, color=VIOLET):
+    """Velocímetro (aguja) con zona verde [lo,hi] sobre un arco 0..mx — variante preferida para
+    'participación de flujos' (meta 25–30%): comunica 'estás lejos/cerca de lo sano' mejor que el gauge.
+    `gauge` sigue disponible para un semicírculo relleno simple."""
+    cx=w/2; cy=h-26; r=118
+    def pt(frac,rr=r): a=math.pi*(1-frac); return cx+rr*math.cos(a), cy-rr*math.sin(a)
+    o=[f'<svg viewBox="0 0 {w} {h}" width="100%" style="max-width:{w}px">']
+    x0,y0=pt(0);x1,y1=pt(1)
+    o.append(f'<path d="M {x0:.1f} {y0:.1f} A {r} {r} 0 0 1 {x1:.1f} {y1:.1f}" fill="none" stroke="{LINE}" stroke-width="18" stroke-linecap="round"/>')
+    xa,ya=pt(lo/mx);xb,yb=pt(hi/mx)
+    o.append(f'<path d="M {xa:.1f} {ya:.1f} A {r} {r} 0 0 1 {xb:.1f} {yb:.1f}" fill="none" stroke="{GREEN}" stroke-width="18" class="hv" data-tip="Zona sana: {lo}–{hi}%"/>')
+    for t in range(0,int(mx)+1,max(1,int(mx//4))):
+        xa2,ya2=pt(t/mx,r-14); xa3,ya3=pt(t/mx,r+2)
+        o.append(f'<line x1="{xa2:.1f}" y1="{ya2:.1f}" x2="{xa3:.1f}" y2="{ya3:.1f}" stroke="{MUT}" stroke-width="1.5"/>')
+        xl,yl=pt(t/mx,r-26); o.append(f'<text x="{xl:.1f}" y="{yl+3:.1f}" text-anchor="middle" font-size="9" fill="{MUT}">{t}%</text>')
+    nx,ny=pt(pct/mx,r-20)
+    o.append(f'<line x1="{cx}" y1="{cy}" x2="{nx:.1f}" y2="{ny:.1f}" stroke="{color}" stroke-width="4" stroke-linecap="round"/>')
+    o.append(f'<circle cx="{cx}" cy="{cy}" r="7" fill="{color}"/>')
+    o.append(f'<text x="{cx}" y="{cy-52}" text-anchor="middle" font-family="Space Grotesk" font-size="30" font-weight="700" fill="{INK}">{pct}%</text>')
+    if pct<lo: o.append(f'<text x="{cx}" y="{cy-34}" text-anchor="middle" font-size="10.5" fill="{RED}">a {lo-pct} pts de lo sano</text>')
     o.append('</svg>'); return ''.join(o)
 
 def gauge(pct, lo, hi, w=300, h=160, color=FLOW):
