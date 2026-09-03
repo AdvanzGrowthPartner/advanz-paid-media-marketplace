@@ -4,7 +4,7 @@ Marketplace privado de Advanz Growth Partner con el toolkit completo del equipo:
 
 ## Plugin incluido
 
-### `advanz-paid-media` (v2.3.0) — 84 skills + 10 agents
+### `advanz-paid-media` (v2.5.0) — 88 skills + 10 agents
 
 #### Paid Ads — Audit & Optimization (claude-ads, 20 skills)
 
@@ -64,7 +64,8 @@ Auditoría profunda multi-plataforma con 250+ checks, scoring ponderado y agents
 #### Sales (1)
 - `sales-enablement` — pitch decks, one-pagers, demo scripts
 
-#### Research & Inteligencia (5)
+#### Research & Inteligencia (6)
+- `7-maletas` — investigación de mercado con el framework "7 Maletas de Cualquier Compra" (buyer personas, dolores, diferenciales); dep de advanz-content-engine
 - `customer-research` — investigación de audiencia
 - `competitor-profiling` — análisis profundo de competidores
 - `competitor-alternatives` — comparativas vs competencia
@@ -82,7 +83,9 @@ Auditoría profunda multi-plataforma con 250+ checks, scoring ponderado y agents
 - `advanz-reporting` — reportes de performance para cliente en HTML branded (cierre de mes / evento); estándar Advanz: estructura de bloques, tono neutral, fuentes por MCP (matriz, Shopify, Klaviyo, GA4, Google/Meta Ads) y design system
 - `advanz-auditoria-google` — motor de auditoría 100% de Google Ads vía MCP (performance + técnica: estructura, keywords, Quality Score, términos, negativas, anuncios, PMax, pujas, presupuesto, conversiones, productos); salida en **narrativa/dashboard branded** para dueño (qué pasa · por qué · qué te cuesta · qué hacer) con reglas anti-falsos-positivos. Dos capas: motor interno del equipo + entregable AUDITORÍA para el prospecto. Multi-fuente (Google Ads + GA4 + Merchant/Shopify)
 
-#### Image & Video Generation (3)
+#### Image & Video Generation (5)
+- `estaticos-ia` — sistema estándar de estáticos publicitarios on-brand con IA (motor de generación de piezas); dep de advanz-content-engine
+- `diagram-engine` — diagramas/mapas interactivos en HTML self-contained (flujos, ecosystem maps, journeys); dep de advanz-content-engine
 - `image` — generación e optimización de imágenes para marketing
 - `video` — producción de video con IA y frameworks programáticos
 - `fal-generate` — fal.ai para imágenes y videos
