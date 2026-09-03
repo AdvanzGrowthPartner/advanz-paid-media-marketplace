@@ -4,7 +4,7 @@ Marketplace privado de Advanz Growth Partner con el toolkit completo del equipo:
 
 ## Plugin incluido
 
-### `advanz-paid-media` (v2.1.0) — 82 skills + 10 agents
+### `advanz-paid-media` (v2.2.0) — 83 skills + 10 agents
 
 #### Paid Ads — Audit & Optimization (claude-ads, 20 skills)
 
@@ -75,10 +75,11 @@ Auditoría profunda multi-plataforma con 250+ checks, scoring ponderado y agents
 - `apify-influencer-discovery` — descubrimiento y validación de influencers
 - `apify-trend-analysis` — análisis de tendencias en redes
 
-#### Analytics & Reporting (3)
+#### Analytics & Reporting (4)
 - `analytics-tracking` — GA4, Meta Pixel, GTM
 - `analytics-product` — PostHog, Mixpanel, funnels
 - `advanz-reporting` — reportes de performance para cliente en HTML branded (cierre de mes / evento); estándar Advanz: estructura de bloques, tono neutral, fuentes por MCP (matriz, Shopify, Klaviyo, GA4, Google/Meta Ads) y design system
+- `advanz-auditoria-google` — motor de auditoría 100% de Google Ads vía MCP (performance + técnica: estructura, keywords, Quality Score, términos, negativas, anuncios, PMax, pujas, presupuesto, conversiones, productos); salida en **narrativa/dashboard branded** para dueño (qué pasa · por qué · qué te cuesta · qué hacer) con reglas anti-falsos-positivos. Dos capas: motor interno del equipo + entregable AUDITORÍA para el prospecto. Multi-fuente (Google Ads + GA4 + Merchant/Shopify)
 
 #### Image & Video Generation (3)
 - `image` — generación e optimización de imágenes para marketing

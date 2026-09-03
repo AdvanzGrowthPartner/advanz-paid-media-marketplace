@@ -1,0 +1,314 @@
+<title>Auditoría Google Ads · Muestra</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+  :root{
+    --vi:#7b2ff7;--vi2:#c15dff;--cy:#22d3ee;--bg:#f4f1fb;--ink:#12101a;--card:#fff;
+    --line:#e7e1f3;--muted:#6b6580;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;
+    --okbg:#eafaf0;--warnbg:#fff5e6;--badbg:#fdeaea;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+    radial-gradient(1200px 480px at 100% -8%,rgba(123,47,247,.10),transparent 60%),
+    radial-gradient(900px 420px at -10% 4%,rgba(34,211,238,.10),transparent 55%),var(--bg);
+    color:var(--ink);font-family:Poppins,system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1040px;margin:0 auto;padding:26px 20px 64px}
+  h1,h2,h3,.num,.big{font-family:'Space Grotesk',Poppins,sans-serif}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px;color:var(--vi);font-size:14px}
+  .brand .dot{width:12px;height:12px;border-radius:3px;background:linear-gradient(135deg,var(--vi),var(--vi2))}
+  .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:30px 0 8px;font-weight:600}
+  .tesis{font-size:31px;font-weight:700;line-height:1.18;margin:6px 0 6px;max-width:880px}
+  .tesis span{background:linear-gradient(120deg,var(--vi),var(--vi2) 55%,var(--cy));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .sub{color:var(--muted);font-size:13.5px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0;box-shadow:0 6px 22px -14px rgba(60,20,120,.25)}
+  /* HERO */
+  .hero{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center}
+  .ring{--p:65;width:150px;height:150px;border-radius:50%;flex:none;
+    background:conic-gradient(from 180deg,var(--bad) 0 40%,var(--warn) 40% 62%,var(--vi) 62% calc(var(--p)*1%),#ece6f7 calc(var(--p)*1%) 100%);
+    display:grid;place-items:center;position:relative}
+  .ring::after{content:"";position:absolute;inset:16px;border-radius:50%;background:var(--card)}
+  .ring .in{position:relative;z-index:1;text-align:center}
+  .ring .in b{font-family:'Space Grotesk';font-size:44px;line-height:1;display:block}
+  .ring .in s{font-size:12px;color:var(--muted);text-decoration:none}
+  .statrow{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .stat{border:1px solid var(--line);border-radius:14px;padding:13px 15px;background:linear-gradient(180deg,#fff,#faf8ff)}
+  .stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+  .stat .v{font-family:'Space Grotesk';font-size:23px;font-weight:700;margin-top:3px}
+  .stat .v.bad{color:var(--bad)}
+  /* SEMAFORO */
+  .semaf{display:grid;gap:9px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .tile{border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:12.5px;display:flex;align-items:center;gap:9px;background:#fff}
+  .tile .st{width:11px;height:11px;border-radius:50%;flex:none}
+  .st.g{background:var(--ok)}.st.a{background:var(--warn)}.st.r{background:var(--bad)}.st.n{background:#bdb7cc}
+  .tile b{font-weight:600}
+  /* DONUT + IS */
+  .viz{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .donut{--m:54;width:132px;height:132px;border-radius:50%;
+    background:conic-gradient(var(--vi) 0 calc(var(--m)*1%),#dcd4f0 calc(var(--m)*1%) 100%);
+    display:grid;place-items:center;position:relative;margin:2px auto}
+  .donut::after{content:"";position:absolute;inset:26px;border-radius:50%;background:#fff}
+  .donut .in{position:relative;z-index:1;text-align:center}
+  .donut .in b{font-family:'Space Grotesk';font-size:26px;display:block;line-height:1}
+  .donut .in s{font-size:10.5px;color:var(--muted);text-decoration:none}
+  .leg{font-size:13px;margin-top:10px}
+  .leg .d{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:middle}
+  .isbar{margin:12px 0}
+  .isbar .top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+  .isbar .track{height:14px;border-radius:8px;background:#ece6f7;overflow:hidden;display:flex}
+  .isbar .track i{display:block;height:100%}
+  .isbar small{color:var(--muted);font-size:11.5px}
+  /* QS pills */
+  .qsrow{display:flex;align-items:center;gap:10px;margin:8px 0;font-size:13px;flex-wrap:wrap}
+  .qsrow .nm{width:190px;flex:none}
+  .qspill{display:inline-grid;place-items:center;min-width:30px;height:26px;padding:0 7px;border-radius:8px;color:#fff;font-family:'Space Grotesk';font-weight:700;font-size:13px}
+  .qsrow .track{flex:1;min-width:90px;height:8px;border-radius:6px;background:#ece6f7;overflow:hidden}
+  .qsrow .track i{display:block;height:100%}
+  /* FINDINGS */
+  .find{border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin:12px 0;position:relative;overflow:hidden}
+  .find::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(var(--vi),var(--vi2))}
+  .find.r::before{background:linear-gradient(var(--bad),#f87171)}
+  .find .hd{display:flex;align-items:flex-start;gap:12px;margin-bottom:8px}
+  .find .ic{font-size:22px;line-height:1.2}
+  .find h3{margin:0;font-size:18px;flex:1}
+  .impact{flex:none;text-align:right}
+  .impact b{font-family:'Space Grotesk';font-size:20px;display:block;line-height:1}
+  .impact.r b{color:var(--bad)} .impact s{font-size:10px;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:.5px}
+  .find .row{display:grid;grid-template-columns:96px 1fr;gap:3px 12px;font-size:13.5px;margin:5px 0}
+  .find .row .lab{color:var(--muted);text-transform:uppercase;font-size:10.5px;letter-spacing:1px;padding-top:2px}
+  .chip{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px}
+  .chip.q{background:var(--okbg);color:var(--ok)}.chip.r{background:var(--badbg);color:var(--bad)}.chip.w{background:var(--warnbg);color:var(--warn)}
+  /* good + plan */
+  .good{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  .gcard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13.5px;background:linear-gradient(180deg,#fff,#f4fef8)}
+  .gcard .t{font-weight:600;color:var(--ok);margin-bottom:2px}
+  .act{counter-reset:s;list-style:none;padding:0;margin:4px 0}
+  .act li{counter-increment:s;position:relative;padding:13px 0 13px 46px;border-bottom:1px solid var(--line);font-size:14px}
+  .act li:last-child{border:0}
+  .act li::before{content:counter(s);position:absolute;left:0;top:11px;width:32px;height:32px;border-radius:9px;
+    background:linear-gradient(135deg,var(--vi),var(--vi2));color:#fff;font-family:'Space Grotesk';font-weight:700;display:grid;place-items:center}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);text-transform:uppercase;font-size:10.5px;letter-spacing:1px;font-weight:600}
+  td.n{font-family:'Space Grotesk';text-align:right}
+  details{margin-top:10px}summary{cursor:pointer;font-weight:600;color:var(--vi);font-size:15px}
+  .foot{color:var(--muted);font-size:12px;margin-top:26px;text-align:center}
+  h2.sec{font-size:15px;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  h2.sec .b{width:6px;height:20px;border-radius:3px;background:linear-gradient(var(--vi),var(--cy))}
+  @media(max-width:660px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.viz,.good{grid-template-columns:1fr}.find .hd{flex-wrap:wrap}.qsrow .nm{width:130px}}
+</style>
+
+<div class="wrap">
+  <div class="brand"><span class="dot"></span> ADVANZ · GROWTH PARTNER</div>
+  <div class="eyebrow">Auditoría de Google Ads · últimos 30 días</div>
+  <div class="tesis">Tu Google trae retorno, pero <span>más de la mitad viene de gente que ya te buscaba</span> — y la captación de clientes nuevos está frenada.</div>
+  <div class="sub">Tienda DTC de suplementos · Chile · 3 campañas activas de 18 · muestra de validación (cuenta anonimizada)</div>
+
+  <!-- HERO -->
+  <div class="card hero">
+    <div class="ring"><div class="in"><b>65</b><s>salud /100</s></div></div>
+    <div style="flex:1;width:100%">
+      <div class="statrow">
+        <div class="stat"><div class="k">💰 Inversión 30d</div><div class="v">$1.210.059</div></div>
+        <div class="stat"><div class="k">📈 Retorno mezclado</div><div class="v">3,4x</div></div>
+        <div class="stat"><div class="k">🔎 Gasto en revisión</div><div class="v bad">~$116.000</div></div>
+        <div class="stat"><div class="k">✅ Áreas verificadas</div><div class="v">8 / 11</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEMAFORO -->
+  <div class="card">
+    <h2 class="sec"><span class="b"></span>Salud por área · de un vistazo</h2>
+    <div class="semaf">
+      <div class="tile"><span class="st g"></span><b>Performance Max</b></div>
+      <div class="tile"><span class="st g"></span><b>Anuncios (RSA)</b></div>
+      <div class="tile"><span class="st g"></span><b>Extensiones</b></div>
+      <div class="tile"><span class="st g"></span><b>Geo / segmentación</b></div>
+      <div class="tile"><span class="st a"></span><b>Estructura</b></div>
+      <div class="tile"><span class="st a"></span><b>Quality Score</b></div>
+      <div class="tile"><span class="st a"></span><b>Pujas</b></div>
+      <div class="tile"><span class="st a"></span><b>Presupuesto / IS</b></div>
+      <div class="tile"><span class="st a"></span><b>Conversiones</b></div>
+      <div class="tile"><span class="st r"></span><b>Exclusiones</b></div>
+      <div class="tile"><span class="st r"></span><b>Productos / feed</b></div>
+    </div>
+    <div class="sub" style="margin-top:10px"><span style="color:var(--ok)">●</span> sólido &nbsp; <span style="color:var(--warn)">●</span> a revisar &nbsp; <span style="color:var(--bad)">●</span> acción &nbsp; <span style="color:#bdb7cc">●</span> sin verificar (GA4/Shopify/landing no conectados)</div>
+  </div>
+
+  <!-- RESUMEN 30s -->
+  <div class="card">
+    <h2 class="sec"><span class="b"></span>El resumen en 30 segundos</h2>
+    <ul style="margin:0;padding-left:18px">
+      <li style="margin:7px 0"><b>Más de la mitad del retorno es tu propia marca</b> — gente que ya te buscaba. La captación nueva rinde 1,25x.</li>
+      <li style="margin:7px 0"><b>La captación está frenada por relevancia:</b> tus palabras de categoría tienen calidad 4–5 de 10 → apareces en menos de la mitad de esas búsquedas.</li>
+      <li style="margin:7px 0"><b>~$116.000/mes en revisión:</b> búsquedas sin venta (casi sin exclusiones) + productos que gastan bajo el punto de equilibrio.</li>
+      <li style="margin:7px 0"><b>La base está sólida:</b> Performance Max bien armada, anuncios "Excelentes", marca al máximo de calidad.</li>
+    </ul>
+  </div>
+
+  <!-- VIZ: marca vs captacion + a donde va la plata -->
+  <div class="viz">
+    <div class="card">
+      <h2 class="sec"><span class="b"></span>¿De quién es el retorno?</h2>
+      <div class="donut"><div class="in"><b>54%</b><s>es marca</s></div></div>
+      <div class="leg" style="text-align:center">
+        <span><span class="d" style="background:var(--vi)"></span>Marca · ya te buscaba · <b>9,4x</b></span><br>
+        <span><span class="d" style="background:#dcd4f0"></span>Captación + resto · <b>~2,0x</b></span>
+      </div>
+    </div>
+    <div class="card">
+      <h2 class="sec"><span class="b"></span>¿A dónde va tu plata?</h2>
+      <div class="isbar">
+        <div class="track">
+          <i style="width:67.8%;background:linear-gradient(90deg,var(--vi),var(--vi2))" title="PMax"></i>
+          <i style="width:19.9%;background:var(--cy)" title="Marca"></i>
+          <i style="width:12.3%;background:#f0a5a5" title="Categoría"></i>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:7px;font-size:12px">
+          <span><span class="d" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--vi)"></span> PMax 68%</span>
+          <span><span class="d" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--cy)"></span> Marca 20%</span>
+          <span><span class="d" style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#f0a5a5"></span> Categoría 12%</span>
+        </div>
+      </div>
+      <div style="border-top:1px dashed var(--line);margin-top:12px;padding-top:12px">
+        <div style="font-size:13px;margin-bottom:6px">De eso, <b style="color:var(--bad)">~$116.000/mes en revisión:</b></div>
+        <div class="isbar"><div class="track" style="height:12px">
+          <i style="width:75%;background:#f0a5a5"></i><i style="width:25%;background:#f6c6c6"></i>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:11.5px;color:var(--muted)">
+          <span>Productos &lt;0,6x · ~$87k</span><span>Búsquedas sin venta · ~$29k</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPRESSION SHARE -->
+  <div class="card">
+    <h2 class="sec"><span class="b"></span>¿Cuánto de la búsqueda capturas?</h2>
+    <div class="isbar">
+      <div class="top"><span><b>Marca</b></span><span>captura <b>76%</b></span></div>
+      <div class="track"><i style="width:76%;background:linear-gradient(90deg,var(--vi),var(--cy))"></i><i style="width:18.7%;background:#f0a5a5"></i><i style="width:5.3%;background:#f6d6a5"></i></div>
+      <small>Pierde 18,7% por <b>presupuesto</b> (a 9,4x de retorno) · 5,3% por ranking</small>
+    </div>
+    <div class="isbar">
+      <div class="top"><span><b>Categoría (clientes nuevos)</b></span><span>captura <b>33%</b></span></div>
+      <div class="track"><i style="width:33%;background:linear-gradient(90deg,var(--vi),var(--cy))"></i><i style="width:47.6%;background:#f0a5a5"></i><i style="width:19.4%;background:#f6d6a5"></i></div>
+      <small>Pierde <b>47,6% por ranking</b> (calidad/puja) · 19,4% por presupuesto</small>
+    </div>
+    <div style="display:flex;gap:16px;margin-top:6px;font-size:11.5px;color:var(--muted)">
+      <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--vi)"></span> capturado</span>
+      <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#f0a5a5"></span> perdido por ranking</span>
+      <span><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#f6d6a5"></span> perdido por presupuesto</span>
+    </div>
+  </div>
+
+  <div class="eyebrow">Hallazgos · ordenados por plata en juego</div>
+
+  <!-- FINDINGS -->
+  <div class="find">
+    <div class="hd"><div class="ic">🏷️</div><h3>El retorno lo sostiene tu propia marca</h3><div class="impact"><b>54%</b><s>del retorno</s></div></div>
+    <div class="row"><div class="lab">Qué pasa</div><div>De cada 10 ventas que Google se anota, ~5 vienen de gente que ya buscaba tu nombre.</div></div>
+    <div class="row"><div class="lab">Por qué</div><div>Marca retorna <b>9,4x</b>; captación (clientes nuevos), <b>1,25x</b>. El 3,4x general está inflado por la marca.</div></div>
+    <div class="row"><div class="lab">Qué hacer</div><div>Leer marca y no-marca por separado, con su propio punto de equilibrio, antes de decidir cuánto escalar.</div></div>
+  </div>
+
+  <div class="find r">
+    <div class="hd"><div class="ic">🚧</div><h3>La captación de clientes nuevos no es competitiva</h3><div class="impact r"><b>47,6%</b><s>búsq. perdidas</s></div></div>
+    <div class="row"><div class="lab">Qué pasa</div><div>En las búsquedas de clientes nuevos apareces en <b>solo 1 de cada 3</b> veces posibles.</div></div>
+    <div class="row"><div class="lab">Por qué</div><div>Se pierde por <b>ranking</b>, no por presupuesto: la palabra que más gasta tiene calidad 5/10 y otra 4/10, con CTR esperado "bajo".</div></div>
+    <div class="row"><div class="lab">Qué hacer</div><div>Subir la calidad: alinear anuncio ↔ búsqueda ↔ página de destino antes de subir puja a ciegas.</div></div>
+    <div style="margin-top:12px;border-top:1px solid var(--line);padding-top:10px">
+      <div class="qsrow"><span class="nm">"amazing care" (marca)</span><span class="track"><i style="width:100%;background:var(--ok)"></i></span><span class="qspill" style="background:var(--ok)">10</span></div>
+      <div class="qsrow"><span class="nm">"electrolitos"</span><span class="track"><i style="width:50%;background:var(--warn)"></i></span><span class="qspill" style="background:var(--warn)">5</span></div>
+      <div class="qsrow"><span class="nm">"electrolitos en polvo"</span><span class="track"><i style="width:40%;background:var(--bad)"></i></span><span class="qspill" style="background:var(--bad)">4</span></div>
+      <div class="sub">Calidad de palabra (0–10). La marca al máximo; la captación arrastra.</div>
+    </div>
+  </div>
+
+  <div class="find r">
+    <div class="hd"><div class="ic">🕳️</div><h3>Búsquedas que pagas y no venden, casi sin filtros</h3><div class="impact r"><b>$29k</b><s>/mes</s></div></div>
+    <div class="row"><div class="lab">Qué pasa</div><div>~1 de cada 5 pesos de la captación se va en búsquedas que no generaron ninguna venta.</div></div>
+    <div class="row"><div class="lab">Por qué</div><div>Cola de términos de competencia/adyacentes ("dr simi", "enervit", "bebidas para resaca") y <b>solo 2 exclusiones activas</b> en toda la cuenta.</div></div>
+    <div class="row"><div class="lab">Qué hacer</div><div>Armar listas de exclusión por tema a nivel de cuenta. <span class="chip q">rápido</span></div></div>
+  </div>
+
+  <div class="find r">
+    <div class="hd"><div class="ic">📦</div><h3>Productos que gastan bajo el punto de equilibrio</h3><div class="impact r"><b>$87k</b><s>/mes</s></div></div>
+    <div class="row"><div class="lab">Qué pasa</div><div>5 productos concentran gasto y devuelven muy por debajo de lo que cuesta venderlos (retorno &lt;0,6x en PMax).</div></div>
+    <div class="row"><div class="lab">Qué hacer</div><div>Revisarlos en el feed y en PMax; segmentar o excluir. <i>Confirmar con ventana 60–90d (a 30d la atribución por producto viene repartida).</i></div></div>
+  </div>
+
+  <div class="find">
+    <div class="hd"><div class="ic">⚡</div><h3>Marca topada de presupuesto (y rinde 9,4x)</h3><div class="impact"><b>18,7%</b><s>búsq. sin capturar</s></div></div>
+    <div class="row"><div class="lab">Qué pasa</div><div>La campaña más rentable deja de mostrarse en ~1 de cada 5 búsquedas por falta de presupuesto.</div></div>
+    <div class="row"><div class="lab">Qué hacer</div><div>Liberar el tope de la marca, financiándolo con lo que hoy rinde bajo el equilibrio. <span class="chip q">quick win</span></div></div>
+  </div>
+
+  <div class="find">
+    <div class="hd"><div class="ic">🧹</div><h3>Palabras de competencia sueltas en la campaña de marca</h3><div class="impact"><b>orden</b><s>estructura</s></div></div>
+    <div class="row"><div class="lab">Qué pasa</div><div>La campaña de marca tiene "gatorade", "powerade", "suerox", "isostar" cargadas — sin una sola impresión (calidad 0).</div></div>
+    <div class="row"><div class="lab">Qué hacer</div><div>Si se quiere conquistar esos términos, van en su propia campaña; si no, se limpian.</div></div>
+  </div>
+
+  <!-- FORTALEZAS -->
+  <div class="card" style="margin-top:18px">
+    <h2 class="sec"><span class="b"></span>Lo que está bien</h2>
+    <div class="good">
+      <div class="gcard"><div class="t">✔ Performance Max bien construida</div>Exclusión de marca activa, 3 grupos segmentados (Hidratación, Remarketing, Deportes) y buena densidad de imágenes, video y logos.</div>
+      <div class="gcard"><div class="t">✔ Anuncios "Excelentes"</div>15 y 13 titulares por anuncio, con la máxima calificación de calidad.</div>
+      <div class="gcard"><div class="t">✔ Marca al máximo</div>Palabras de marca en calidad 10/10 y separadas de la captación.</div>
+      <div class="gcard"><div class="t">✔ Extensiones y geo correctas</div>Buena cobertura (sitelinks, llamados, precios, promos) y segmentación "personas en" la ubicación.</div>
+    </div>
+  </div>
+
+  <!-- PLAN -->
+  <div class="card">
+    <h2 class="sec"><span class="b"></span>El plan · 3 movimientos</h2>
+    <ol class="act">
+      <li><b>Esta semana:</b> liberar presupuesto de marca + cargar listas de exclusión. Recupera retorno alto y corta ~$29.000/mes. <span class="chip q">quick wins</span></li>
+      <li><b>Este mes:</b> plan de calidad para la captación — subir el Quality Score de las palabras de categoría para bajar ese 47,6% de búsquedas perdidas.</li>
+      <li><b>Este mes:</b> revisar los 5 productos bajo equilibrio con ventana 60–90d y decidir segmentar o excluir (~$87.000/mes en juego).</li>
+    </ol>
+  </div>
+
+  <!-- ANEXO -->
+  <details class="card">
+    <summary>Anexo técnico · detalle por área</summary>
+    <div style="margin-top:14px" class="viz">
+      <div>
+        <h3 style="margin:0 0 8px;font-size:14px">Estado por área</h3>
+        <table>
+          <tr><th>Área</th><th>Estado</th></tr>
+          <tr><td>Performance Max</td><td>🟢 Excl. marca + 3 grupos + assets</td></tr>
+          <tr><td>Anuncios (RSA)</td><td>🟢 Excelente (15/13 titulares)</td></tr>
+          <tr><td>Extensiones</td><td>🟢 Completas (falta structured snippets)</td></tr>
+          <tr><td>Geo / segmentación</td><td>🟢 "Personas en" correcto</td></tr>
+          <tr><td>Estructura</td><td>🟡 Conquista mal ubicada; 15 pausadas</td></tr>
+          <tr><td>Quality Score</td><td>🟡 Categoría 4–5, CTR esperado bajo</td></tr>
+          <tr><td>Pujas</td><td>🟡 Maximizar valor; marca topada</td></tr>
+          <tr><td>Presupuesto / IS</td><td>🟡 Marca 18,7% ppto · Categoría 47,6% ranking</td></tr>
+          <tr><td>Conversiones</td><td>🟡 Compra GA4 primaria OK; EC/consent s/verif.</td></tr>
+          <tr><td>Exclusiones</td><td>🔴 Solo 2 negativas (~$29k)</td></tr>
+          <tr><td>Productos / feed</td><td>🔴 5 SKUs &lt;0,6x (~$87k)</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3 style="margin:0 0 8px;font-size:14px">Campañas activas (30d)</h3>
+        <table>
+          <tr><th>Campaña</th><th class="n">Gasto</th><th class="n">Retorno</th></tr>
+          <tr><td>PMax Principal</td><td class="n">$820.679</td><td class="n">2,1x</td></tr>
+          <tr><td>Search Marca</td><td class="n">$241.017</td><td class="n">9,4x</td></tr>
+          <tr><td>Search Categoría</td><td class="n">$148.363</td><td class="n">1,25x</td></tr>
+          <tr><td><b>Total</b></td><td class="n"><b>$1.210.059</b></td><td class="n"><b>3,4x</b></td></tr>
+        </table>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">97,9 conversiones · valor $4.134.446. Marca = 54% de las conversiones. Categoría: impression share 33%.</p>
+      </div>
+    </div>
+  </details>
+
+  <!-- SALUD DATOS -->
+  <div class="card">
+    <h2 class="sec"><span class="b"></span>Salud de los datos</h2>
+    <p style="font-size:13.5px;margin:0">Conectado: <b>Google Ads</b> — auditoría completa de estructura, keywords, calidad, anuncios, PMax, extensiones, pujas, presupuesto y productos. Sin conectar en esta corrida: <b>GA4</b>, <b>Merchant Center</b>, <b>Shopify</b> y la <b>landing</b> → quedan "por verificar" la discrepancia de conversiones, el consent mode / enhanced conversions y la landing. Con esas fuentes cierra al 100%. <b>Ningún hallazgo se reporta sin dato que lo sostenga.</b></p>
+  </div>
+
+  <div class="foot">Advanz Growth Partner · Auditoría de Google Ads · muestra de validación de skill · datos reales anonimizados</div>
+</div>
