@@ -4,7 +4,7 @@ Marketplace privado de Advanz Growth Partner con el toolkit completo del equipo:
 
 ## Plugin incluido
 
-### `advanz-paid-media` (v2.2.0) — 83 skills + 10 agents
+### `advanz-paid-media` (v2.3.0) — 84 skills + 10 agents
 
 #### Paid Ads — Audit & Optimization (claude-ads, 20 skills)
 
@@ -20,7 +20,8 @@ Auditoría profunda multi-plataforma con 250+ checks, scoring ponderado y agents
 - `ad-creative` — generación de estructuras de creativos
 - `ab-test-setup` — diseño de tests A/B con significancia estadística
 
-#### Copy & Contenido (8)
+#### Copy & Contenido (9)
+- `advanz-content-engine` — motor brand-agnostic de creativos on-brand con IA de punta a punta (onboarding → clasificar → generar → aprobar → Meta → medir → aprender); 2 modos (Express/Sistema), Brand Profile por marca, matriz avatar×ángulo, loop de ADN ganador. Reusa estaticos-ia / 7-maletas / diagram-engine
 - `copywriting` — copy de venta para landing, ads y email
 - `copy-editing` — revisión y pulido de copy
 - `social-content` — contenido para redes sociales
