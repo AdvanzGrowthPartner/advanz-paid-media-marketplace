@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reporte de Rentabilidad · plantilla Advanz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<!--
+  PLANTILLA DE REFERENCIA · Reporte de Rentabilidad de Shopify (método Advanz)
+  Datos = ejemplo del framework (no cliente). Reemplazar por los datos reales del reporte.
+  Componentes en orden fijo (ver references/narrativa-output.md). Self-contained, guardar
+  local, nunca Artifact. Tokens de marca Advanz: violeta #c15dff + cyan #00ddfc.
+-->
+<style>
+  :root{
+    --bg:#0a0814;--bg-soft:#120d20;--card:#16102a;--card-2:#1b1436;
+    --ink:#f4f1fb;--mute:#a99fc4;--faint:#6e6691;
+    --violet:#c15dff;--cyan:#00ddfc;--red:#ff5d7a;--red-bg:#ff5d7a1a;
+    --green:#3fe0a0;--green-bg:#3fe0a01a;--amber:#ffc861;--hair:#c15dff29;
+    --radius:1.5rem;--radius-lg:2rem;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(1100px 640px at 82% -12%, #c15dff14, transparent 60%),
+      radial-gradient(820px 560px at -12% 112%, #00ddfc10, transparent 55%),var(--bg);
+    color:var(--ink);font-family:"Poppins",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .mono{font-family:"Space Grotesk",monospace}
+  .wrap{max-width:1080px;margin:0 auto;padding:38px 26px 80px}
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+  .logo{font-weight:800;letter-spacing:-.02em;font-size:19px}.logo b{color:var(--violet)}
+  .top .meta{margin-left:auto;font-family:"Space Grotesk";font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--faint)}
+  .card{background:linear-gradient(180deg,var(--card),var(--bg-soft));border:1px solid var(--hair);
+    border-radius:var(--radius-lg);box-shadow:0 30px 90px -50px #00000090,inset 0 1px 0 #ffffff08;
+    padding:26px 28px;margin-bottom:20px}
+  .kick{font-family:"Space Grotesk";font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--violet);margin:0 0 8px}
+
+  /* HERO */
+  .hero{display:grid;grid-template-columns:1fr 168px;gap:24px;align-items:center}
+  .hero h1{font-size:29px;line-height:1.14;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+  .hero h1 .u{background:linear-gradient(90deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{color:var(--mute);font-size:14.5px;margin:0}
+  .ring{display:grid;place-items:center;width:168px;height:168px;border-radius:50%;
+    background:conic-gradient(var(--violet) 0 61%,#2a2140 61% 100%);position:relative}
+  .ring::after{content:"";position:absolute;inset:14px;border-radius:50%;background:var(--bg-soft)}
+  .ring .n{position:relative;z-index:1;text-align:center}
+  .ring .n b{font-family:"Space Grotesk";font-size:40px;font-weight:700;display:block;line-height:1}
+  .ring .n span{font-size:11px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+  .stat{background:var(--card-2);border:1px solid var(--hair);border-radius:var(--radius);padding:15px 16px}
+  .stat .l{font-size:11.5px;color:var(--faint);margin:0 0 6px}
+  .stat .v{font-family:"Space Grotesk";font-weight:700;font-size:22px}
+  .stat .v.red{color:var(--red)}.stat .v.green{color:var(--green)}
+
+  /* SEMAFORO */
+  .semaforo{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .tile{display:flex;align-items:center;gap:10px;background:var(--card-2);border:1px solid var(--hair);
+    border-radius:14px;padding:12px 14px;font-size:13.5px}
+  .d{width:10px;height:10px;border-radius:50%;flex:none}
+  .d.g{background:var(--green)}.d.a{background:var(--amber)}.d.r{background:var(--red)}.d.w{background:var(--faint)}
+
+  /* TABLA productos */
+  table.rep{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.rep th{font-family:"Space Grotesk";text-transform:uppercase;letter-spacing:.07em;font-size:10.5px;
+    color:var(--faint);text-align:right;padding:0 12px 12px;font-weight:500}
+  table.rep th:first-child{text-align:left}
+  table.rep td{padding:13px 12px;border-top:1px solid #ffffff10;text-align:right;font-family:"Space Grotesk"}
+  table.rep td:first-child{text-align:left;font-family:"Poppins"}
+  .pill{font-family:"Space Grotesk";font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;margin-left:8px}
+  .pill.top{background:#c15dff22;color:var(--violet)}
+  .marg.lo{color:var(--red);font-weight:700}.marg.hi{color:var(--green);font-weight:700}
+  tr.flag td{background:var(--red-bg)}
+  .thesis{margin-top:16px;padding:14px 18px;border-radius:var(--radius);background:var(--card-2);
+    border:1px solid #ff5d7a44;font-size:15.5px;font-weight:600}.thesis b{color:var(--red)}
+
+  /* GAUGE ROAS */
+  .gauge{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .bar{flex:1;min-width:220px;height:16px;border-radius:999px;background:#231a3d;position:relative;overflow:hidden}
+  .bar .fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--violet),var(--cyan));border-radius:999px}
+  .bar .be{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--ink)}
+  .glabel{font-family:"Space Grotesk";font-size:12px;color:var(--mute)}
+
+  /* HALLAZGOS */
+  .find{display:flex;gap:16px;align-items:flex-start;background:var(--card-2);border:1px solid var(--hair);
+    border-radius:var(--radius);padding:18px 20px;margin-bottom:12px}
+  .find.act{border-color:#ff5d7a55}
+  .find .ic{font-size:22px;flex:none}
+  .find .body{flex:1}.find h4{margin:0 0 8px;font-size:16px}
+  .find .r{font-size:13px;color:var(--mute);margin:3px 0;line-height:1.5}
+  .find .r b{color:var(--ink)}
+  .find .impact{font-family:"Space Grotesk";font-weight:700;font-size:26px;color:var(--red);flex:none;text-align:right}
+  .find.good .impact{color:var(--green)}
+
+  /* PLAN */
+  .plan{counter-reset:s;display:grid;gap:12px}
+  .step{display:flex;gap:14px;align-items:flex-start}
+  .step::before{counter-increment:s;content:counter(s);font-family:"Space Grotesk";font-weight:700;
+    width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--violet),var(--cyan));
+    color:#0a0814;display:grid;place-items:center;flex:none;font-size:15px}
+  .step .t{font-size:14.5px;padding-top:4px}.step .qw{font-family:"Space Grotesk";font-size:10px;font-weight:700;
+    color:var(--cyan);border:1px solid #00ddfc44;border-radius:999px;padding:2px 8px;margin-left:8px}
+
+  details.annex{background:var(--card-2);border:1px solid var(--hair);border-radius:var(--radius)}
+  details.annex summary{cursor:pointer;padding:16px 20px;font-weight:600;font-size:14px;list-style:none}
+  details.annex summary::-webkit-details-marker{display:none}
+  details.annex .in{padding:0 20px 18px;color:var(--mute);font-size:13px}
+  .health{font-family:"Space Grotesk";font-size:12.5px;color:var(--mute);line-height:1.7}
+  .health .nv{color:var(--amber)}
+  .ex{display:inline-block;margin-left:auto;font-family:"Space Grotesk";font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--faint);border:1px dashed var(--hair);padding:5px 11px;border-radius:999px}
+  h3.sec{font-size:17px;font-weight:700;margin:0 0 16px;letter-spacing:-.01em}
+  @media(max-width:760px){.hero{grid-template-columns:1fr}.stats,.semaforo{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="logo">advan<b>z</b></div>
+    <div class="meta">Reporte de Rentabilidad · Shopify · [tienda] · [período]</div>
+  </div>
+
+  <!-- HERO -->
+  <section class="card">
+    <p class="kick">Salud de rentabilidad</p>
+    <div class="hero">
+      <div>
+        <h1>Tu tienda vende, pero el margen vive de <span class="u">2 productos</span> — y el que más vende deja 12%.</h1>
+        <p>Ahí es donde está yendo tu pauta. El detalle, abajo — en 30 segundos.</p>
+      </div>
+      <div class="ring"><div class="n"><b>61</b><span>de 100</span></div></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><p class="l">Ventas netas (90d)</p><p class="v">$21,8M</p></div>
+      <div class="stat"><p class="l">Margen promedio</p><p class="v">34%</p></div>
+      <div class="stat"><p class="l">ROAS de equilibrio</p><p class="v">2,9x</p></div>
+      <div class="stat"><p class="l">Margen en la mesa</p><p class="v red">~$2,1M</p></div>
+    </div>
+  </section>
+
+  <!-- SEMAFORO -->
+  <section class="card">
+    <p class="kick">Semáforo de áreas</p>
+    <div class="semaforo">
+      <div class="tile"><span class="d r"></span>Margen por producto</div>
+      <div class="tile"><span class="d a"></span>Mix / concentración</div>
+      <div class="tile"><span class="d a"></span>Recompra / LTV</div>
+      <div class="tile"><span class="d r"></span>Descuentos</div>
+      <div class="tile"><span class="d g"></span>AOV / ticket</div>
+      <div class="tile"><span class="d w"></span>Devoluciones (sin dato)</div>
+    </div>
+  </section>
+
+  <!-- TABLA productos -->
+  <section class="card">
+    <h3 class="sec">Margen real por producto</h3>
+    <table class="rep">
+      <thead><tr><th>Producto</th><th>Uds</th><th>Ventas</th><th>Margen</th></tr></thead>
+      <tbody>
+        <tr class="flag"><td>Pack Familiar <span class="pill top">#1 ventas</span></td><td>512</td><td>$10,2M</td><td class="marg lo">12%</td></tr>
+        <tr><td>Combo Regalo</td><td>74</td><td>$3,7M</td><td class="marg">39%</td></tr>
+        <tr><td>Kit Individual</td><td>168</td><td>$5,0M</td><td class="marg hi">46%</td></tr>
+        <tr><td>Refill x3</td><td>96</td><td>$2,9M</td><td class="marg hi">58%</td></tr>
+      </tbody>
+    </table>
+    <p class="thesis">Tu #1 en ventas deja <b>12%</b>. El que menos vende deja <b>58%</b>. Estás escalando el equivocado.</p>
+  </section>
+
+  <!-- GAUGE -->
+  <section class="card">
+    <h3 class="sec">Retorno real vs. retorno de equilibrio</h3>
+    <div class="gauge">
+      <div class="bar"><div class="fill" style="width:76%"></div><div class="be" style="left:72%"></div></div>
+      <div class="glabel">ROAS real <b style="color:var(--ink)">2,2x</b> · equilibrio <b style="color:var(--ink)">2,9x</b> → <span style="color:var(--red)">zona de pérdida</span></div>
+    </div>
+  </section>
+
+  <!-- HALLAZGOS -->
+  <section class="card">
+    <h3 class="sec">Los hallazgos, ordenados por plata en juego</h3>
+    <div class="find act">
+      <div class="ic">🩸</div>
+      <div class="body">
+        <h4>Tu producto estrella es el que menos te deja</h4>
+        <p class="r"><b>Qué pasa:</b> el Pack Familiar es tu nº1 en unidades y último en margen (12%).</p>
+        <p class="r"><b>Por qué:</b> su costo y descuento promedio se comen la contribución; el Refill deja 58%.</p>
+        <p class="r"><b>Qué te cuesta:</b> cada peso de pauta al Pack rinde ~5x menos margen que al Refill <i>(estimación, 90d)</i>.</p>
+        <p class="r"><b>Qué hacer:</b> mover pauta al Refill / Kit y revisar precio o costo del Pack antes de escalar.</p>
+      </div>
+      <div class="impact">$2,1M</div>
+    </div>
+    <div class="find">
+      <div class="ic">🏷️</div>
+      <div class="body">
+        <h4>El descuento se está comiendo el margen del Pack</h4>
+        <p class="r"><b>Qué pasa:</b> el Pack se vende en promedio con 22% de descuento sobre un margen de 34% base.</p>
+        <p class="r"><b>Qué hacer:</b> subir el piso de precio o mover el descuento a un bundle que suba el margen mezclado.</p>
+      </div>
+      <div class="impact">$740k</div>
+    </div>
+  </section>
+
+  <!-- FORTALEZAS + PLAN -->
+  <section class="card">
+    <h3 class="sec">Lo que está bien</h3>
+    <div class="semaforo">
+      <div class="tile"><span class="d g"></span>Refill: 58% de margen, base de recompra</div>
+      <div class="tile"><span class="d g"></span>Kit Individual: 46%, buen volumen</div>
+      <div class="tile"><span class="d g"></span>AOV sano vs. categoría</div>
+    </div>
+    <h3 class="sec" style="margin-top:24px">El plan · 3 movimientos</h3>
+    <div class="plan">
+      <div class="step"><div class="t">Reasignar pauta del Pack al Refill / Kit <span class="qw">quick win</span></div></div>
+      <div class="step"><div class="t">Bundle Pack + Refill para subir el margen mezclado del estrella</div></div>
+      <div class="step"><div class="t">Revisar costo/precio del Pack antes del próximo ciclo de pauta</div></div>
+    </div>
+  </section>
+
+  <!-- ANEXO -->
+  <details class="annex">
+    <summary>Anexo técnico — tabla completa de productos, COGS y márgenes ▾</summary>
+    <div class="in">Aquí va la tabla cruda: SKU · unidades · ventas netas · COGS · margen $ · margen % · descuento % · devoluciones. Datos de las consultas ShopifyQL del Paso 2.</div>
+  </details>
+
+  <!-- SALUD DE DATOS -->
+  <section class="card" style="margin-top:20px">
+    <p class="kick">Salud de los datos <span class="ex">Ejemplo del framework</span></p>
+    <p class="health">
+      Moneda: CLP · Ventana: últimos 90 días · Cobertura de COGS: <b style="color:var(--green)">100%</b><br>
+      Fuentes conectadas: Shopify ✓ · Meta Ads ✓ · GA4 ✓<br>
+      <span class="nv">No verificado:</span> tasa de devoluciones por producto (no disponible por MCP en esta tienda).
+    </p>
+  </section>
+</div>
+</body>
+</html>

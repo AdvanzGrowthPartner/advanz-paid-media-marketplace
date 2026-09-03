@@ -4,7 +4,7 @@ Marketplace privado de Advanz Growth Partner con el toolkit completo del equipo:
 
 ## Plugin incluido
 
-### `advanz-paid-media` (v2.5.0) — 88 skills + 10 agents
+### `advanz-paid-media` (v2.6.0) — 89 skills + 10 agents
 
 #### Paid Ads — Audit & Optimization (claude-ads, 20 skills)
 
@@ -77,11 +77,12 @@ Auditoría profunda multi-plataforma con 250+ checks, scoring ponderado y agents
 - `apify-influencer-discovery` — descubrimiento y validación de influencers
 - `apify-trend-analysis` — análisis de tendencias en redes
 
-#### Analytics & Reporting (4)
+#### Analytics & Reporting (5)
 - `analytics-tracking` — GA4, Meta Pixel, GTM
 - `analytics-product` — PostHog, Mixpanel, funnels
 - `advanz-reporting` — reportes de performance para cliente en HTML branded (cierre de mes / evento); estándar Advanz: estructura de bloques, tono neutral, fuentes por MCP (matriz, Shopify, Klaviyo, GA4, Google/Meta Ads) y design system
 - `advanz-auditoria-google` — motor de auditoría 100% de Google Ads vía MCP (performance + técnica: estructura, keywords, Quality Score, términos, negativas, anuncios, PMax, pujas, presupuesto, conversiones, productos); salida en **narrativa/dashboard branded** para dueño (qué pasa · por qué · qué te cuesta · qué hacer) con reglas anti-falsos-positivos. Dos capas: motor interno del equipo + entregable AUDITORÍA para el prospecto. Multi-fuente (Google Ads + GA4 + Merchant/Shopify)
+- `advanz-rentabilidad-shopify` — motor de rentabilidad 100% de una tienda Shopify vía MCP (margen de contribución por producto con COGS, volumen vs margen y el **producto-fuga**, ROAS de equilibrio, recompra/LTV, descuentos y devoluciones que comen margen, mix/concentración); salida en **narrativa/dashboard branded** para dueño (qué pasa · por qué · qué te cuesta · qué hacer) con reglas anti-falsos-positivos (sin COGS NO inventa margen). Dos capas: motor interno + entregables REPORTE (reporte 360) y MARGEN (calculadora de ROAS de equilibrio) para el prospecto
 
 #### Image & Video Generation (5)
 - `estaticos-ia` — sistema estándar de estáticos publicitarios on-brand con IA (motor de generación de piezas); dep de advanz-content-engine
